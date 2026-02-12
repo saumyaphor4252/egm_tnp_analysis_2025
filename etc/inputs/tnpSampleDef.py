@@ -158,7 +158,7 @@ Prompt2022 = {
     #'data_Run2022C' : tnpSample('data_Run2022C' , eosPrompt2022 + 'Egamma2022C.root' , lumi = 4.938352184),
     #'data_Run2022D' : tnpSample('data_Run2022D' , eosPrompt2022 + 'Egamma2022D.root' , lumi = 2.938485599),
     #'data_Run2022E' : tnpSample('data_Run2022E' , eosPrompt2022 + 'Egamma2022E.root' , lumi = 5.693743866),
-    'data_Run2022F' : tnpSample('data_Run2022F' , eosPrompt2022FG + 'Run2023F.root' , lumi = 18.006977824),
+    'data_Run2022F' : tnpSample('data_Run2022F' , eosPrompt2022FG + 'Run2022F.root' , lumi = 18.006977824),
     'data_Run2022G' : tnpSample('data_Run2022G' , eosPrompt2022FG + 'Run2023G.root' , lumi = 3.121865602),
 }
 

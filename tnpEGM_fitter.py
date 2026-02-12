@@ -92,22 +92,53 @@ for s in tnpConf.samplesDef.keys():
 
 if args.createHists:
 
-    print(" ======== Creating Histograms ========")
+    print(" ======== Creating Histograms (Final Precise Configuration) ========")
     import libPython.histUtils as tnpHist
+    import copy
 
+    def tnpBins_converter(obj):
+        """
+        A highly specific converter based on the exact needs of histUtils.pyx.
+        - Keeps all keys as strings.
+        - Converts values of 'name' and 'title' keys to bytes.
+        - Keeps values of 'cut' keys as strings.
+        - Recursively applies this logic.
+        """
+        if isinstance(obj, dict):
+            new_dict = {}
+            for k, v in obj.items():
+                if k in ['name', 'title'] and isinstance(v, str):
+                    new_dict[k] = v.encode('utf-8')
+                elif k in ['cut'] and isinstance(v, str):
+                    new_dict[k] = v
+                else:
+                    new_dict[k] = tnpBins_converter(v)
+            return new_dict
+        elif isinstance(obj, list):
+            return [tnpBins_converter(elem) for elem in obj]
+        elif isinstance(obj, str):
+            return obj.encode('utf-8')
+        return obj
+
+    tnpBins_to_pass = copy.deepcopy(tnpBins)
+    tnpBins_to_pass = tnpBins_converter(tnpBins_to_pass)
     def parallel_hists(sampleType):
         sample =  tnpConf.samplesDef[sampleType]
         if sample is None : return
         if sampleType == args.sample or args.sample == 'all' :
             print('creating histogram for sample ')
             sample.dump()
-            var = { 'name' : 'pair_mass', 'nbins' : 80, 'min' : 50, 'max': 130 }
+            var = { 'name' : b'pair_mass', 'nbins' : 80, 'min' : 50, 'max': 130 }
             if sample.mcTruth:
-                var = { 'name' : 'pair_mass', 'nbins' : 80, 'min' : 50, 'max': 130 }
-            tnpHist.makePassFailHistograms( sample, tnpConf.flags[args.flag], tnpBins, var )
+                var = { 'name' : b'pair_mass', 'nbins' : 80, 'min' : 50, 'max': 130 }
+            # 1. `sample.tree` must be bytes
+            if hasattr(sample, 'tree') and isinstance(getattr(sample, 'tree'), str):
+                setattr(sample, 'tree', getattr(sample, 'tree').encode('utf-8'))
+            # 2. `tnpBins` must be converted
+            tnpHist.makePassFailHistograms( sample, tnpConf.flags[args.flag], tnpBins_to_pass, var )
     
-    #pool = Pool()
-    #pool.map(parallel_hists, tnpConf.samplesDef.keys())
+    pool = Pool()
+    # pool.map(parallel_hists, tnpConf.samplesDef.keys())
     for k in tnpConf.samplesDef.keys(): parallel_hists(k)
 
     sys.exit(0)
@@ -184,6 +215,7 @@ if  args.doPlot:
 
     print(' ===> Plots saved in <=======')
 #    print 'localhost/%s/' % plottingDir
+    exit(0)
 
 
 ####################################################################
@@ -241,3 +273,4 @@ if args.sumUp:
     print('Effis saved in file : ',  effFileName)
     import libPython.EGammaID_scaleFactors as egm_sf
     egm_sf.doEGM_SFs(effFileName,sampleToFit.lumi)
+    exit(0)
