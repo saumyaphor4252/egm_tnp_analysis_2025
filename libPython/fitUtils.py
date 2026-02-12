@@ -31,7 +31,7 @@ def createWorkspaceForAltSig( sample, tnpBin, tnpWorkspaceParam ):
                 x=re.compile('%s.*?' % par)
                 listToRM = filter(x.match, tnpWorkspaceParam)
                 for ir in listToRM :
-                    print '**** remove', ir
+                    print('**** remove', ir)
                     tnpWorkspaceParam.remove(ir)                    
             tnpWorkspaceParam.append( 'tailLeft[-1]' )
 
@@ -51,7 +51,7 @@ def createWorkspaceForAltSig( sample, tnpBin, tnpWorkspaceParam ):
     fitPar = fitresF.floatParsFinal()
     for ipar in range(len(fitPar)):
         pName = fitPar[ipar].GetName()
-        print '%s[%2.3f]' % (pName,fitPar[ipar].getVal())
+        print('%s[%2.3f]' % (pName,fitPar[ipar].getVal()))
         for par in listOfParam:
             if pName == par:
                 x=re.compile('%s.*?' % pName)
@@ -64,7 +64,7 @@ def createWorkspaceForAltSig( sample, tnpBin, tnpWorkspaceParam ):
     fitPar = fitresP.floatParsFinal()
     for ipar in range(len(fitPar)):
         pName = fitPar[ipar].GetName()
-        print '%s[%2.3f]' % (pName,fitPar[ipar].getVal())
+        print('%s[%2.3f]' % (pName,fitPar[ipar].getVal()))
         for par in listOfParam:
             if pName == par:
                 x=re.compile('%s.*?' % pName)

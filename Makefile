@@ -5,11 +5,11 @@ LDFLAGS = $(shell root-config --libs)
 
 .PHONY: build
 build:
-	cd libPython && CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" python setup.py build_ext --inplace
+	cd libPython && CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" python3 setup.py build_ext --inplace
 
 .PHONY: cython-build
 cython-build:
-	cd libPython && CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" python setup.py build_ext --inplace --use-cython
+	cd libPython && CFLAGS="$(CFLAGS)" LDFLAGS="$(LDFLAGS)" python3 setup.py build_ext --inplace --use-cython
 
 .PHONY: clean
 clean:

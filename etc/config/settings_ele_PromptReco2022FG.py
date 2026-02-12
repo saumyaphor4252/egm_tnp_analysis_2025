@@ -28,7 +28,7 @@ flags = {
     'passingMVA122XwpHZZisoV1'      : '(passingMVA122XwpHZZisoV1 == 1)'
     }
 
-baseOutDir = '/eos/user/b/bjoshi/www/EGM/TnP/PromptReco_official/tnpEleID_PromptReco2022FG/'
+baseOutDir = '/eos/user/s/ssaumya/EGammaHLT/Test/'
 
 #############################################################
 ########## samples definition  - preparing the samples
@@ -40,15 +40,15 @@ tnpTreeDir = 'tnpEleIDs'
 
 
 samplesDef = {
-        'data'  : tnpSamples.Run3_124X_PromptReco2022F['data_Run2022F'].clone(),
-        'mcNom' : tnpSamples.Run3_124X_PromptReco2022F['DY_1j_madgraph_postEE'].clone(),
-        'tagSel': tnpSamples.Run3_124X_PromptReco2022F['DY_1j_madgraph_postEE'].clone(),
+        'data'  : tnpSamples.Prompt2022['data_Run2022F'].clone(),
+        'mcNom' : tnpSamples.Prompt2022['DY_madgraph'].clone(),
+        'tagSel': tnpSamples.Prompt2022['DY_madgraph'].clone(),
         'mcAlt': None,
     }
 
 ## can add data sample easily
 
-samplesDef['data'].add_sample(tnpSamples.Run3_124X_PromptReco2022G['data_Run2022G'].clone()) 
+#samplesDef['data'].add_sample(tnpSamples.Run3_124X_PromptReco2022G['data_Run2022G'].clone()) 
 
 ## some sample-based cuts... general cuts defined here after
 ## require mcTruth on MC DY samples and additional cuts

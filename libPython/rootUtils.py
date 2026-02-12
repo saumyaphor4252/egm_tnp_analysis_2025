@@ -1,6 +1,6 @@
 import ROOT as rt
 import math
-from fitUtils import *
+from .fitUtils import *
 import ctypes
 
 def removeNegativeBins(h):
@@ -13,11 +13,11 @@ def makePassFailHistograms( sample, flag, bindef, var ):
     ## open rootfile
     tree = rt.TChain(sample.tree)
     for p in sample.path:
-        print ' adding rootfile: ', p
+        print(' adding rootfile: ', p)
         tree.Add(p)
 
     if not sample.puTree is None:
-        print ' - Adding weight tree: %s from file %s ' % (sample.weight.split('.')[0], sample.puTree)
+        print(' - Adding weight tree: %s from file %s ' % (sample.weight.split('.')[0], sample.puTree))
         tree.AddFriend(sample.weight.split('.')[0],sample.puTree)
 
     ## open outputFile
@@ -74,14 +74,14 @@ def makePassFailHistograms( sample, flag, bindef, var ):
             itot  = (passI+failI)
             eff   = passI / (passI+failI)
             e_eff = math.sqrt(passI*passI*efail*efail + failI*failI*epass*epass) / (itot*itot)
-        print cuts
-        print '    ==> pass: %.1f +/- %.1f ; fail : %.1f +/- %.1f : eff: %1.3f +/- %1.3f' % (passI,epass,failI,efail,eff,e_eff)
+        print(cuts)
+        print('    ==> pass: %.1f +/- %.1f ; fail : %.1f +/- %.1f : eff: %1.3f +/- %1.3f' % (passI,epass,failI,efail,eff,e_eff))
     outfile.Close()
 
 
 def histPlotter( filename, tnpBin, plotDir ):
-    print 'opening ', filename
-    print '  get canvas: ' , '%s_Canv' % tnpBin['name']
+    print('opening ', filename)
+    print('  get canvas: ' , '%s_Canv' % tnpBin['name'])
     rootfile = rt.TFile(filename,"read")
 
     c = rootfile.Get( '%s_Canv' % tnpBin['name'] )

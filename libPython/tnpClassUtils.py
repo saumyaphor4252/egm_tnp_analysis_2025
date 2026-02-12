@@ -39,18 +39,18 @@ class tnpSample:
         self.mcTruth = truth
 
     def dump(self):
-        print '**** name: %-*s ' % (100, self.name)
-        print '  path    : ', self.path
-        print '  tnpTree : ', self.tnpTree
+        print('**** name: %-*s ' % (100, self.name))
+        print('  path    : ', self.path)
+        print('  tnpTree : ', self.tnpTree)
         if self.isMC:
-            print '   --- MC sample --- '
-            print '  nEvts    : ', self.nEvts
-            print '  mcTruth  : ', self.mcTruth
-            print '  puTree   : ', self.puTree
-            print '  weight   : ', self.weight
+            print('   --- MC sample --- ')
+            print('  nEvts    : ', self.nEvts)
+            print('  mcTruth  : ', self.mcTruth)
+            print('  puTree   : ', self.puTree)
+            print('  weight   : ', self.weight)
         else  :
-            print '   --- Data sample --- '
-            print '  lumi     : ', self.lumi
+            print('   --- Data sample --- ')
+            print('  lumi     : ', self.lumi)
 
     def rename(self, newname):
         self.name = newname
