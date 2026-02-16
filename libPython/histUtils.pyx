@@ -66,8 +66,12 @@ def makePassFailHistograms( sample, flag, bindef, var ):
         tree.Add(str.encode(p))
 
     if not sample.puTree is None:
-        print(' - Adding weight tree: %s from file %s ' % (sample.weight.split('.')[0], sample.puTree))
-        tree.AddFriend(sample.weight.split('.')[0],sample.puTree)
+        import os
+        if os.path.exists(sample.puTree):
+            print(' - Adding weight tree: %s from file %s ' % (sample.weight.split('.')[0], sample.puTree))
+            tree.AddFriend(str.encode(sample.weight.split('.')[0]), str.encode(sample.puTree))
+        else:
+            print(' - Weight tree file not found or not readable, skipping AddFriend:', sample.puTree)
 
     #################################
     # Prepare hists, cuts and outfile
