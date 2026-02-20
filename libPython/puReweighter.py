@@ -4,9 +4,9 @@ import sys
 import argparse
 import os
 
-print '** puReweighter requires root_numpy.'
-print '** To install on lxplus: '
-print 'pip install --user root_numpy'
+print('** puReweighter requires root_numpy.')
+print('** To install on lxplus: ')
+print('pip install --user root_numpy')
 from root_numpy import  tree2array, array2tree
 
 
@@ -279,12 +279,12 @@ rhoDataEpoch = {
 
 def reweight( sample, puType = 0,useCustomW=False  ):
     if sample.path is None:
-        print '[puReweighter]: Need to know the MC tree (option --mcTree or sample.path)'
+        print('[puReweighter]: Need to know the MC tree (option --mcTree or sample.path)')
         sys.exit(1)
     
 
 ### create a tree with only weights that will be used as friend tree for reweighting different lumi periods
-    print 'Opening mc file: ', sample.path[0]
+    print('Opening mc file: ', sample.path[0])
     fmc = rt.TFile(sample.path[0],'read')
     tmc = None
     if sample.tnpTree is None:
@@ -305,7 +305,7 @@ def reweight( sample, puType = 0,useCustomW=False  ):
         hmc.Scale(1/hmc.Integral())
         for ib in range(1,hmc.GetNbinsX()+1):
             puMCnVtx.append( hmc.GetBinContent(ib) )
-        print 'len nvtxMC = ',len(puMCnVtx)
+        print('len nvtxMC = ',len(puMCnVtx))
 
     elif puType == 2 :
         hmc   = rt.TH1F('hMC_rho'  ,'MC #rho'  , 75,-0.5,74.5)
@@ -313,15 +313,15 @@ def reweight( sample, puType = 0,useCustomW=False  ):
         hmc.Scale(1/hmc.Integral())
         for ib in range(1,hmc.GetNbinsX()+1):
             puMCrho.append( hmc.GetBinContent(ib) )
-        print 'len rhoMC = ',len(puMCrho)
+        print('len rhoMC = ',len(puMCrho))
     
 
     puDataDist = {}
     puDataArray= {}
     weights = {}
-    epochKeys = puDataEpoch.keys()
-    if puType == 1  : epochKeys = nVtxDataEpoch.keys()
-    if puType == 2  : epochKeys = rhoDataEpoch.keys()
+    epochKeys = list(puDataEpoch.keys())
+    if puType == 1  : epochKeys = list(nVtxDataEpoch.keys())
+    if puType == 2  : epochKeys = list(rhoDataEpoch.keys())
  
     for pu in epochKeys:
         fpu = None
@@ -335,7 +335,7 @@ def reweight( sample, puType = 0,useCustomW=False  ):
         for ipu in range(len(puMC[puMCscenario])):
             ibin_pu  = puDataDist[pu].GetXaxis().FindBin(ipu+0.00001)
             puDataArray[pu].append(puDataDist[pu].GetBinContent(ibin_pu))
-        print 'puData[%s] length = %d' % (pu,len(puDataArray[pu]))
+        print('puData[%s] length = %d' % (pu,len(puDataArray[pu])))
         fpu.Close()
         weights[pu] = []
 
@@ -348,10 +348,10 @@ def reweight( sample, puType = 0,useCustomW=False  ):
     else            :  pumc = puMC[puMCscenario]
 
     puMax = len(pumc)
-    print '-> nEvtsTot ', len(mcEvts)
+    print('-> nEvtsTot ', len(mcEvts))
 #    print "--------------------------" 
-    for ievt in xrange(len(mcEvts)):
-        if ievt%100000 == 0 :            print 'iEvt:',ievt
+    for ievt in range(len(mcEvts)):
+        if ievt%100000 == 0 :            print('iEvt:',ievt)
 #        print 'iEvt:',ievt
         evt = mcEvts[ievt]
         for pu in epochKeys:
